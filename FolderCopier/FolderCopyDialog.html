@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <!-- Use a templated HTML printing scriptlet to import common stylesheet -->
+    <?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+
+  </head>
+  <body>
+    <!-- Below is the HTML code that defines the dialog element structure. -->
+    <div>
+      <p>Please enter the folder ID you want to copy.</p>
+      <div class="block" id="source-dialog-elements">
+        <label for="source-folder-id-textbox">
+          Source Folder ID:
+        </label>
+        <input type="text" class="width-100" id="source-folder-id-textbox">
+      </div>
+      <br />
+      <p>Please enter the target folder ID. The source folder will be copied to the Drive root folder if omitted.</p>
+      <div class="block" id="target-dialog-elements">
+        <label for="target-folder-id-textbox">
+          Target Folder ID:
+        </label>
+        <input type="text" class="width-100" id="target-folder-id-textbox">
+      </div>
+      <br />
+      <div class="block" id="drive-file-dialog-elements">
+        <input type="checkbox" id="drive-files-only-checkbox" checked><label for="drive-files-only-checkbox">Include only drive file types.</label>
+      </div>
+      <br />
+      <div class="block" id="dialog-button-bar">
+          <button class="action" id="dialog-copy-button">Copy</button>
+          <button class="action" id="dialog-list-button">List</button>
+          <button id="dialog-cancel-button" onclick="google.script.host.close()">Cancel</button>
+      </div>
+      <div id="dialog-status"></div>
+    </div>
+    
+    <script>
+      var targetId = '<?= getProperty('targetFolderId') ?>';
+      var driveOnly = '<?= getProperty('driveOnly') ?>';
+      driveOnly = driveOnly == 'false' ? false : true;
+    </script>
+    <!-- Use a templated HTML printing scriptlet to import JavaScript. -->
+    <?!= HtmlService.createHtmlOutputFromFile('FolderCopyDialogJS').getContent(); ?>
+  </body>
+</html>
